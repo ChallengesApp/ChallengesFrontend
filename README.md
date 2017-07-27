@@ -22,5 +22,5 @@ To run the web app on your machine (OSX) for development or testing, do this:
 1. Install [Node](https://nodejs.org). Run `brew install node`.
 1. Install [yarn](https://yarnpkg.com/en/) if needed. It's like an app store for Javascript packages.
 1. Go to the `web` directory.
-1. Run `yarn install` to download React and other dependencies for the web app.
+1. Run `yarn install` to download React and other dependencies for the web app. `npm install -g yarn`
 1. Run `yarn start` which will build the app and open it in a web browser!
