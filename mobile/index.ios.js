@@ -7,47 +7,30 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
-  StyleSheet,
-  Text,
-  View
 } from 'react-native';
+import { NativeRouter as Router, Route } from 'react-router-native';
+import TestComponent from './TestComponent.ios.js'
+
+// This exposes the core querying/mutation functionality of Apollo.
+import ApolloClient, { createNetworkInterface } from 'apollo-client'
+
+// By wrapping React components in this, they can query/mutate the Apollo store.
+import { ApolloProvider } from 'react-apollo'
+
+const apolloClient = new ApolloClient({
+	networkInterface: createNetworkInterface({ uri: 'https://api.graph.cool/simple/v1/cj5lrcpnd0xid0134bh5dnm2n'})
+})
 
 export default class mobile extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
+    	<ApolloProvider client={apolloClient}>
+	      <Router>
+	        <Route path="/" component={TestComponent} />
+	      </Router>
+	      </ApolloProvider>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
 
 AppRegistry.registerComponent('mobile', () => mobile);
