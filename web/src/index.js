@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
+import TestComponentWithData from './TestComponent';
 import registerServiceWorker from './registerServiceWorker';
 
 // This exposes the core querying/mutation functionality of Apollo.
@@ -15,9 +15,8 @@ const apolloClient = new ApolloClient({
 })
 
 ReactDOM.render((
-	// We wrap App in the ApolloProvider even though it's not using it yet.
 	<ApolloProvider client={apolloClient}>
-		<App />
+		<TestComponentWithData />
 	</ApolloProvider>
 	),
 	document.getElementById('root')
