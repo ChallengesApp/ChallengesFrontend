@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import TestComponentWithData from './TestComponent';
 import registerServiceWorker from './registerServiceWorker';
+import { BrowserRouter, Route } from 'react-router-dom';
+import TestComponent from './TestComponent.js';
 
 // This exposes the core querying/mutation functionality of Apollo.
 import ApolloClient, { createNetworkInterface } from 'apollo-client'
@@ -14,9 +14,13 @@ const apolloClient = new ApolloClient({
 	networkInterface: createNetworkInterface({ uri: 'https://api.graph.cool/simple/v1/cj5lrcpnd0xid0134bh5dnm2n'})
 })
 
+// The root render call.
 ReactDOM.render((
+	// Wrap the entire page in ApolloProvider, handles loading/caching/vending data.
 	<ApolloProvider client={apolloClient}>
-		<TestComponentWithData />
+		<BrowserRouter>
+			<Route path="/" component={TestComponent}/>
+		</BrowserRouter>
 	</ApolloProvider>
 	),
 	document.getElementById('root')
