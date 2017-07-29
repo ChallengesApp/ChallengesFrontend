@@ -23,7 +23,7 @@ class TestComponent extends React.Component {
       <div>Got from server: {this.props.data.TestObject.testField}</div>
     )
   }
- }
+}
 
 const TestObjectQuery = gql`{
     TestObject(id: "cj5lrdzvm8yh90191zz4w72gv") {
