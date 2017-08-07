@@ -5,43 +5,41 @@ import {
   Text,
   View
 } from 'react-native';
+import { gql, graphql } from 'react-apollo'
 
-export default class TestComponent extends Component {
+class TestComponent extends React.Component {
   render() {
+    if (this.props.data.loading) {
+      return <Text style={styles.bigCentered}>Loading…</Text>
+    }
+
+    if (this.props.data.error) {
+      return <Text style={styles.bigCentered}>Error!</Text>
+    }
+
     return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
-    );
+      <Text style={styles.bigCentered}>Got from server: {this.props.data.TestObject.testField}</Text>
+    )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
+  bigCentered: {
     fontSize: 20,
     textAlign: 'center',
     margin: 10,
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
 });
+const TestObjectQuery = gql`{
+    TestObject(id: "cj5lrdzvm8yh90191zz4w72gv") {
+      testField
+    }
+}`
+
+// The `graphql()` function is provided by Apollo. It is available
+// here because we've wrapped our TestComponentWithData in an ApolloProvider.
+const TestComponentWithData = graphql(TestObjectQuery)(TestComponent);
+
+export default TestComponentWithData
 
 AppRegistry.registerComponent('TestComponent', () => TestComponent);
