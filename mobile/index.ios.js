@@ -12,7 +12,7 @@ import ApolloClient, { createNetworkInterface } from 'apollo-client'
 import { ApolloProvider } from 'react-apollo'
 
 const apolloClient = new ApolloClient({
-	networkInterface: createNetworkInterface({ uri: 'https://api.graph.cool/simple/v1/cj5lrcpnd0xid0134bh5dnm2n'})
+	networkInterface: createNetworkInterface({ uri: 'https://api.graph.cool/simple/v1/cj5h0vrp9ug5d0122fw1yudoh'})
 })
 
 export default class mobile extends Component {

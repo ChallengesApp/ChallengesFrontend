@@ -20,32 +20,37 @@ class LoggedOutRoot extends React.Component {
   }
 
   pretendLogin() {
-    Alert.alert(
-      'Pretend Login!',
-      `Now we need to send the login request with ${this.state.email} and ${this.state.password}.`,
-      [
-        {text: 'OK', onPress: () => console.log('OK Pressed')},
-      ]
-    )
+    this.props.mutate({
+      variables: {
+        email: this.state.email,
+        password: this.state.password }
+    }).then(({data}) => {
+      Alert.alert(
+          "Success!",
+          `Logged in ${data.signinUser.user.username}. Token: ${data.signinUser.token !== null}`,
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ]
+      )
+    }).catch((error) => {
+      Alert.alert(
+          "Error!",
+          `Message: ${error}`,
+          [
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ]
+      )
+    });
   }
 
   render() {
-    if (this.props.data.loading) {
-      return <Text style={styles.bigCentered}>Logged out. Loading…</Text>
-    }
-
-    if (this.props.data.error) {
-      return <Text style={styles.bigCentered}>Logged out. Error!</Text>
-    }
-
     return (
       <View>
         <Text
           style={styles.bigCentered}>
-          Logged out. Server says: {this.props.data.TestObject.testField}
+          Logged out.
         </Text>
         <TextInput
-          ref='EmailInput'
           placeholder="Email"
           keyboardType="email-address"
           autoCapitalize="none"
@@ -85,15 +90,20 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 });
-const TestObjectQuery = gql`{
-    TestObject(id: "cj5lrdzvm8yh90191zz4w72gv") {
-      testField
+const login = gql`
+  mutation signinUser($email: String!, $password: String!) {
+    signinUser(email: { email: $email, password: $password }) {
+      token,
+      user {
+        username
+      }
     }
-}`
+  }
+`
 
 // The `graphql()` function is provided by Apollo. It is available
 // here because we've wrapped our LoggedOutRootWithData in an ApolloProvider.
-const LoggedOutRootWithData = graphql(TestObjectQuery)(LoggedOutRoot);
+const LoggedOutRootWithData = graphql(login)(LoggedOutRoot);
 
 export default LoggedOutRootWithData
 
