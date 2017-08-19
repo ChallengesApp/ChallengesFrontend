@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {
+  ActivityIndicator,
   Alert,
   AppRegistry,
   Button,
@@ -14,17 +15,22 @@ class LoggedOutRoot extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      email:'',
-      password:''
+      loading: false,
+      email: '',
+      password: ''
     }
   }
 
-  pretendLogin() {
-    this.props.mutate({
+  // Updates the "loading" state, sends the login
+  // mutation and displays an alert with the result.
+  login() {
+    this.setState({ loading: true })
+    this.props.mutation_login({
       variables: {
         email: this.state.email,
         password: this.state.password }
     }).then(({data}) => {
+      this.setState({ loading: false })
       Alert.alert(
           "Success!",
           `Logged in ${data.signinUser.user.username}. Token: ${data.signinUser.token !== null}`,
@@ -33,6 +39,7 @@ class LoggedOutRoot extends React.Component {
           ]
       )
     }).catch((error) => {
+      this.setState({ loading: false })
       Alert.alert(
           "Error!",
           `Message: ${error}`,
@@ -40,7 +47,7 @@ class LoggedOutRoot extends React.Component {
             {text: 'OK', onPress: () => console.log('OK Pressed')},
           ]
       )
-    });
+    })
   }
 
   render() {
@@ -69,15 +76,19 @@ class LoggedOutRoot extends React.Component {
           returnKeyType="go"
           enablesReturnKeyAutomatically={true}
           onSubmitEditing={(event) => {
-            this.pretendLogin()
+            this.login()
           }}
           onChangeText={(text) => { this.setState({password: text}) }}
         />
-        <Button
+        
+        { this.state.loading ?
+          <ActivityIndicator size="large" />
+        : <Button
           title="Log in"
           onPress={(event) => {
-            this.pretendLogin()
-        }} />
+            this.login()
+          }} />
+        }
       </View>
     )
   }
@@ -90,7 +101,8 @@ const styles = StyleSheet.create({
     margin: 10,
   },
 });
-const login = gql`
+
+const loginMutation = gql`
   mutation signinUser($email: String!, $password: String!) {
     signinUser(email: { email: $email, password: $password }) {
       token,
@@ -101,9 +113,8 @@ const login = gql`
   }
 `
 
-// The `graphql()` function is provided by Apollo. It is available
-// here because we've wrapped our LoggedOutRootWithData in an ApolloProvider.
-const LoggedOutRootWithData = graphql(login)(LoggedOutRoot);
+// Bind our login mutation into our component so we can call it as needed.
+const LoggedOutRootWithData = graphql(loginMutation, { name: 'mutation_login' })(LoggedOutRoot);
 
 export default LoggedOutRootWithData
 
