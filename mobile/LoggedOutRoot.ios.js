@@ -9,13 +9,20 @@ import {
   View
 } from 'react-native';
 import { gql, graphql } from 'react-apollo'
-import { reduxForm, Field } from 'redux-form'
 
 class LoggedOutRoot extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      email:'',
+      password:''
+    }
+  }
+
   pretendLogin() {
     Alert.alert(
       'Pretend Login!',
-      'Now we need to send the login request with (email) and (password).',
+      `Now we need to send the login request with ${this.state.email} and ${this.state.password}.`,
       [
         {text: 'OK', onPress: () => console.log('OK Pressed')},
       ]
@@ -33,30 +40,38 @@ class LoggedOutRoot extends React.Component {
 
     return (
       <View>
-        <Text style={styles.bigCentered}>Logged out. Server says: {this.props.data.TestObject.testField}</Text>
+        <Text
+          style={styles.bigCentered}>
+          Logged out. Server says: {this.props.data.TestObject.testField}
+        </Text>
         <TextInput
-        placeholder="Email"
-        keyboardType="email-address"
-        autoCapitalize="none"
-        autoCorrect={false}
-        returnKeyType="next"
-        enablesReturnKeyAutomatically={true}
-        onSubmitEditing={(event) => { 
-          this.refs.PasswordInput.focus(); 
-        }} />
+          ref='EmailInput'
+          placeholder="Email"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
+          returnKeyType="next"
+          enablesReturnKeyAutomatically={true}
+          onSubmitEditing={(event) => { 
+            this.refs.PasswordInput.focus(); 
+          }}
+          onChangeText={(text) => { this.setState({email: text}) }}
+        />
         <TextInput
-        ref='PasswordInput'
-        placeholder="Password"
-        secureTextEntry={true}
-        returnKeyType="go"
-        enablesReturnKeyAutomatically={true}
-        onSubmitEditing={(event) => {
-          this.pretendLogin()
-        }} />
+          ref='PasswordInput'
+          placeholder="Password"
+          secureTextEntry={true}
+          returnKeyType="go"
+          enablesReturnKeyAutomatically={true}
+          onSubmitEditing={(event) => {
+            this.pretendLogin()
+          }}
+          onChangeText={(text) => { this.setState({password: text}) }}
+        />
         <Button
-        title="Log in"
-        onPress={(event) => {
-          this.pretendLogin()
+          title="Log in"
+          onPress={(event) => {
+            this.pretendLogin()
         }} />
       </View>
     )
