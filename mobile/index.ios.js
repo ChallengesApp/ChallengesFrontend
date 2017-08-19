@@ -1,15 +1,9 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
 } from 'react-native';
 import { NativeRouter as Router, Route } from 'react-router-native';
-import TestComponent from './TestComponent.ios.js'
+import LoggedOutRoot from './LoggedOutRoot.ios.js'
 
 // This exposes the core querying/mutation functionality of Apollo.
 import ApolloClient, { createNetworkInterface } from 'apollo-client'
@@ -26,7 +20,7 @@ export default class mobile extends Component {
     return (
     	<ApolloProvider client={apolloClient}>
 	      <Router>
-	        <Route path="/" component={TestComponent} />
+	        <Route path="/" component={LoggedOutRoot} />
 	      </Router>
 	      </ApolloProvider>
     );
