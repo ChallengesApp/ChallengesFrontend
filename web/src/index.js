@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import registerServiceWorker from './registerServiceWorker';
 import { BrowserRouter, Route } from 'react-router-dom';
 import TestComponent from './TestComponent.js';
 
@@ -28,4 +27,3 @@ ReactDOM.render((
 	),
 	document.getElementById('root')
 );
-registerServiceWorker();
