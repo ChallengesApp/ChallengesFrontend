@@ -14,6 +14,23 @@ Web, iOS, Android frontends for the Challenges App.
 
 Apollo reads data from our GraphQL backend and stores it in Redux stores, which we read and render into React components, which are sent to ReactDOM (browser) or React Native to be displayed.
 
+### The web app is deployed!
+
+The `web` subfolder is deployed using Heroku. It's running at https://challenges-app.herokuapp.com currently. Go there and you can see that it's talking to the backend.
+
+**To deploy new code to Heroku:**
+
+When our code changes, we can deploy the latest to Heroku. This can't be done automatically, sadly. It's not hard to do.
+
+**Only the first time:**
+1. Make a Heroku account and ask someone to add you to our Heroku app.
+1. Install heroku onto your machine. On macOS, the best way is to use Homebrew, and run `brew install heroku`.
+1. Run `heroku login` to get yourself logged in.
+1. Add the heroku git server as a remote to your git repo `git remote add heroku https://git.heroku.com/challenges-app.git`
+**Then after that:**
+1. Push the `web` subfolder to Heroku: `git subtree push --prefix web heroku master`
+1. You're done! Go to https://challenges-app.herokuapp.com to see the latest.
+
 ### Running the Web App Locally
 
 To run the web app on your machine (OSX) for development or testing, do this:
