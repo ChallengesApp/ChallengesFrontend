@@ -20,7 +20,7 @@ class TestComponent extends React.Component {
     }
 
     return (
-      <div>Got from server: {this.props.data.TestObject.testField}</div>
+      <div>Got from backend: {this.props.data.TestObject.testField}</div>
     )
   }
 }
