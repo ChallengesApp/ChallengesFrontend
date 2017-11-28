@@ -1,13 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import TestComponent from './TestComponent.js';
-import CreateUser from './CreateUser.js';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import CreateUser from './components/CreateUser.js'
+import App from './components/App.js'
+import Login from './components/Login.js'
 
 // This exposes the core querying/mutation functionality of Apollo.
-import ApolloClient from 'apollo-client';
-import { createHttpLink } from 'apollo-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import ApolloClient from 'apollo-client'
+import { createHttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloLink} from 'apollo-link'
 
 // By wrapping React components in this, they can query/mutate the Apollo store.
@@ -40,8 +41,9 @@ ReactDOM.render((
 	<ApolloProvider client={apolloClient}>
 		<BrowserRouter>
 			<Switch>
-				<Route exact path='/' component={TestComponent} />
+				<Route exact path='/' component={App} />
 				<Route path='/signup' component={CreateUser}/>
+				<Route path='/login' component={Login}/>
 			</Switch>
 		</BrowserRouter>
 	</ApolloProvider>

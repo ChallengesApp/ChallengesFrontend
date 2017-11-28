@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import { graphql, compose } from 'react-apollo'
 import { withRouter } from 'react-router-dom'
 import gql from 'graphql-tag'
