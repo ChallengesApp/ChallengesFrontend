@@ -46,7 +46,8 @@ class Login extends React.Component {
       const loginResponse = await this.props.loginUserMutation({
         variables: { email, password }
       })
-      localStorage.setItem('graphcoolToken', loginResponse.data.signinUser.token)
+      localStorage.setItem('userToken', loginResponse.data.signinUser.token)
+      localStorage.setItem('userID', loginResponse.data.signinUser.user.id)
       this.props.history.push('/')
     } catch (e) {
       window.confirm('Error: ', e)

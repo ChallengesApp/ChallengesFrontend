@@ -4,9 +4,10 @@ import LoggedOutRoot from './LoggedOutRoot'
 
 class App extends React.Component {
   render() {
-	const token = localStorage.getItem('graphcoolToken')
-	if (token) {
-		return <LoggedInRoot/>
+	const token = localStorage.getItem('userToken')
+	const userID = localStorage.getItem('userID')
+	if (token && userID) {
+		return <LoggedInRoot userID={userID}/>
 	} else {
 		return <LoggedOutRoot/>
 	}

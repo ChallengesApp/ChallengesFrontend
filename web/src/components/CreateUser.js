@@ -50,14 +50,16 @@ class CreateUser extends React.Component {
     const { email, password, name } = this.state
 
     try {
-      const createUserResponse = await this.props.signupUserMutation({
+      // First create the user object
+      await this.props.signupUserMutation({
         variables: { email, password, name }
       })
+      // Then login as that user (yucky!)
       const loginResponse = await this.props.loginUserMutation({
         variables: { email, password }
       })
-      window.confirm('Account created!')
-      localStorage.setItem('graphcoolToken', loginResponse.data.signinUser.token)
+      localStorage.setItem('userToken', loginResponse.data.signinUser.token)
+      localStorage.setItem('userID', loginResponse.data.signinUser.user.id)
       this.props.history.push('/')
     } catch (e) {
       window.confirm('Error: ', e)
